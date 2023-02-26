@@ -8,12 +8,14 @@ class AuthController {
 
   @Post('signup')
   signup(@Body() dto: SignupDto) {
-    return this.authService.signup();
+    const { email, password } = dto;
+    return this.authService.signup(email, password);
   }
 
   @Post('login')
   login(@Body() dto: AuthDto) {
-    return this.authService.signin();
+    const { email, password } = dto;
+    return this.authService.signup(email, password);
   }
 }
 

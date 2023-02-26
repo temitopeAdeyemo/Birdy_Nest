@@ -8,16 +8,19 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  email     String   @unique
-  hash      String
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  email     String     @unique
+  password  String
   firstName String?
-  lastName String?
+  lastName  String?
+  bookmarks Bookmark[]
+
+  @@map("users")
 }
 
-model Bookmark{
+model Bookmark {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
@@ -25,4 +28,8 @@ model Bookmark{
   description String?
   link        String?
 
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  @@map("bookmarks")
 }
