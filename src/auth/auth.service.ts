@@ -19,6 +19,7 @@ export default class AuthService {
         select: { email: true },
       });
 
+      // delete user.email;
       return { email, password };
     } catch (error) {
       if (
@@ -27,6 +28,29 @@ export default class AuthService {
       ) {
         throw new ForbiddenException('Credential Exists');
       }
+      throw error;
+    }
+  }
+
+  async signin(email: string, password: string): Promise<AuthDto> {
+    try {
+      const user = await this.prismaService.user.findUnique({
+        where: { email },
+      });
+      if (!user) {
+        throw new ForbiddenException('Credentials  invalid.');
+      }
+
+      const passwordMatch = await argon.verify(user.password, password);
+
+      if (!passwordMatch) {
+        console.log('9999');
+
+        throw new ForbiddenException('Credentials  invalid.');
+      }
+      // await jwt
+      return { email, password };
+    } catch (error) {
       throw error;
     }
   }
