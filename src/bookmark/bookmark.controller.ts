@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { GetUser } from 'src/auth/decorators';
 import { JwtGuard } from 'src/auth/guard';
-import { pipeline } from 'stream';
 import { BookmarkService } from './bookmark.service';
 import { CreateBookmarkDto } from './dto/createBookmark.dto';
 
